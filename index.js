@@ -37,35 +37,26 @@ async function run() {
     })
 
 
-  //   app.get('/tasks/:email', async(req,res) => {
-  //     const email = req.params.email;
-  //   const query = {userEmail:email}
-  //     const result = await TasksCollection.find(query).toArray();
-  //     res.send(result)
-  // })
+    app.get('/tasks/:email', async(req,res) => {
+      const email = req.params.email;
+    const query = {email:email}
+    
+      const result = await TasksCollection.find(query).toArray();
+      console.log(result)
+      res.send(result)
+  })
 
 
-    app.get("/tasks", async (req, res) => {
-      const result = await TasksCollection.find().toArray();
-      res.send(result);
-    });
 
     app.get('/singleTasks/:id',async(req,res) => {
       const id = req.params.id
-      console.log(id)
+      
       const query = { _id: new ObjectId(id) }
       const result = await TasksCollection.findOne(query);
       res.send(result) 
   })
 
-    // app.get('/tasks/:email', async(req,res) => {
-    //   const query = { email: req.params.email}
-    //   if (req.params.email !== req.decoded.email) {
-    //     return res.status(403).send({message: 'forbidden access'})
-    //   }
-    //   const result = await TasksCollection.find(query).toArray();
-    //   res.send(result)
-    // })
+   
 
     app.delete('/tasks/:id', async(req,res) =>{
       const id = req.params.id;
@@ -77,7 +68,7 @@ async function run() {
     app.put("/tasks/:id", async (req, res) => {
       const id = req.params.id;
       const data = req.body;
-      console.log("id", id, data);
+     
       const filter = { _id: new ObjectId(id) };
       
       const options = { upsert: true };
